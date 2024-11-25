@@ -14,7 +14,7 @@ public class ExpenseModel {
     private String description;
 
     @ManyToOne
-    private Category category;
+    private CategoryModel category;
 
     public int getId() {
         return id;
@@ -48,11 +48,12 @@ public class ExpenseModel {
         this.description = description;
     }
 
-    public Category getCategory() {
+    public CategoryModel getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(CategoryModel category) {
         this.category = category;
     }
 }
+
