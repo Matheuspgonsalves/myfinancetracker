@@ -23,4 +23,27 @@ public class UserService {
 
         return userRepository.save(user);
     }
+
+    public UserModel updateUser(int id, UserModel updateUser){
+        UserModel existingUser = userRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("User Not Found"));
+
+        existingUser.setEmail(updateUser.getEmail());
+        existingUser.setName(updateUser.getName());
+        existingUser.setLastName(updateUser.getLastName());
+
+        if(updateUser.getPasswordHash() != null && !updateUser.getPasswordHash().isEmpty()){
+            String encryptedPassword = passwordEncoder.encode(updateUser.getPasswordHash());
+            existingUser.setPasswordHash(encryptedPassword);
+        }
+
+        return userRepository.save(existingUser);
+    }
+
+    public void deleteUser(int id){
+        if(!userRepository.existsById(id)){
+            throw new RuntimeException("User not found");
+        }
+        userRepository.deleteById(id);
+    }
 }
